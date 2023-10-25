@@ -2,7 +2,6 @@ import {Button, StyleSheet, TextInput, View} from "react-native";
 import {useState} from "react";
 
 function GoalInput(props) {
-
     const [enteredGoal, setEnteredGoal] = useState('');
 
     function goalInputHandler(enteredText) {
