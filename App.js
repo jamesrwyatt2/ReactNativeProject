@@ -1,10 +1,11 @@
-import {StyleSheet, View, FlatList} from 'react-native';
+import {StyleSheet, View, FlatList, Button} from 'react-native';
 import {useState} from 'react';
 
 import GoalItem from "./components/GoalItem";
 import GoalInput from "./components/GoalInput";
 
 export default function App() {
+    const [isModalVisible, setIsModalVisible] = useState(false);
     const [courseGoals, setCourseGoals] = useState([]);
 
     function addGoalHandler(enteredGoal) {
@@ -15,7 +16,12 @@ export default function App() {
                 id: enteredGoal,
             }]);
     }
-
+    function startAddGoalHandler() {
+        setIsModalVisible(true);
+    }
+    function cancelAddGoalHandler() {
+        setIsModalVisible(false);
+    }
     function deleteGoalHandler(id) {
         setCourseGoals(courseGoals => {
             return courseGoals.filter((goal) => goal.id !== id)
@@ -24,7 +30,8 @@ export default function App() {
 
     return (
         <View style={styles.appContainer}>
-            <GoalInput onAddGoal={addGoalHandler}/>
+            <Button title="Add New Goal" color="#540daf" onPress={startAddGoalHandler}/>
+            <GoalInput onAddGoal={addGoalHandler} visible={isModalVisible} onCancelGoal={cancelAddGoalHandler}/>
             <View style={styles.goalsContainer}>
                 <FlatList data={courseGoals} renderItem={(itemData) => {
                     return (
@@ -43,6 +50,7 @@ export default function App() {
 
 const styles = StyleSheet.create({
     appContainer: {
+        backgroundColor: '#31136b',
         flex: 1,
         paddingTop: 50,
         paddingHorizontal: 16,
